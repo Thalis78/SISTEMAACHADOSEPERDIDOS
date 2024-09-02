@@ -33,6 +33,7 @@ public class AdmController {
         List<AlunoModel> alunos = alunoRepository.findByPrimeiroNome(alunoModel.getNome());
         if(alunos.size() > 0){
             model.addAttribute("stylePersonalizado","display : none;");
+            model.addAttribute("src","static/icons/de-volta.png");
             model.addAttribute("display","display: table-row");
             model.addAttribute("nome","Nome");
             model.addAttribute("documento","Documento");
