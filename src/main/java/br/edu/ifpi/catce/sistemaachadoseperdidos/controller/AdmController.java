@@ -61,7 +61,7 @@ public class AdmController {
     }
     @GetMapping("/confirmar")
     public String confirmar(@RequestParam("id") Long id, Model model){
-        model.addAttribute("src","static/icons/de-volta.png");
+        model.addAttribute("src","static/icons/ideia.png");
         model.addAttribute("id",id);
         return "/adm/confirmar";
     }
