@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layoutPadraoAdm.html}"><head>
+    <title>CADASTRAR</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div layout:fragment="container">
+    <div class="contextGenerico">
+        <form method="post" action="/cadastroRealizado" th:object="${alunoModel}">
+            <p th:text="${mensagem}" th:class="${style}"></p>
+            <h2>Cadastrar:</h2>
+            <br>
+            <div class="mb-3">
+                <label class="form-label">Nome do aluno:</label>
+                <input class="form-control" type="text" th:field="*{nome}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Cpf/Cnpj/Rg:</label>
+                <input class="form-control" type="text" th:field="*{identificador}">
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Tipo de Documento:</label>
+                <input class="form-control" type="text" th:field="*{tipo_documento}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Data:</label>
+                <input class="form-control" type="date" th:field="*{data}" required>
+            </div>
+
+            <br>
+            <input type="submit" class="btn btn-sucess" value="Cadastrar">
+        </form>
+    </div>
+</div>
+</body>
+</html>

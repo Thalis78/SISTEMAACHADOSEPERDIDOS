@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layoutPadraoAdm.html}">
+<head>
+  <title>ADM</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div layout:fragment="container">
+  <div class="contextGenerico">
+    <div class="styleConfir">
+      <a href="buscaradm"><img th:src="${src}" width="20px"></a>
+      <h3>
+        Aperte do botão confirmar para excluir.
+      </h3>
+      <form action="deletar" method="post">
+        <input type="hidden" name="id" th:value="${id}"/>
+        <button type="submit" class="btn btn-danger">Confirmar</button>
+      </form>
+    </div>
+  </div>
+</div>
+</body>
+</html>

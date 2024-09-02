@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layoutPadrao.html}">
+<head>
+    <title>BUSCAR</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div layout:fragment="container">
+
+    <div class="contextGenerico">
+        <p th:text="${mensagem}" th:class="${style}"></p>
+        <img th:src="${src}" width="50px">
+        <h2>Buscar</h2>
+        <br>
+        <form method="get" action="resultadoBusca" th:object="${alunoModel}"
+              th:style="${stylePersonalizado}" >
+            <div class="mb-3">
+                <label class="form-label" for="nome">Nome do Aluno:</label>
+                <input class="form-control" id="nome" required type="text" th:field="*{nome}">
+            </div>
+            <br>
+            <input type="submit" class="btn btn-sucess" value="Buscar">
+        </form>
+        <div>
+            <table class="table table-bordered" style="text-align: center">
+                <thead id="display" th:style="${display}">
+                <tr>
+                    <td scope="col">NOME</td>
+                    <td scope="col">DOCUMENTO</td>
+                    <td scope="col">DATA</td>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="aluno : ${alunoModelList}">
+                    <td th:text="${aluno.nome}"></td>
+                    <td th:text="${aluno.tipo_documento}"></td>
+                    <td th:text="${aluno.data}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
