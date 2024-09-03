@@ -49,11 +49,6 @@ public class AdmController {
         return "adm/buscar";
 
     }
-    @GetMapping("/loginadm")
-    public String login(){
-        return "/adm/login";
-    }
-
 
     @GetMapping("/cadastraradm")
     public String cadastrar(Model model){
