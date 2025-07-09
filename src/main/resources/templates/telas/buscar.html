@@ -1,21 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layoutPadrao.html}">
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layoutPadrao.html}">
 <head>
     <title>BUSCAR</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 <div layout:fragment="container">
-
     <div class="contextGenerico">
-        <p th:text="${mensagem}" th:class="${style}"></p>
 
-        <a href="buscar"><img th:src="${src}" width="20px"></a>
+        <a href="buscaradm"><img th:src="${src}" width="20px"></a>
+
+        <p th:text="${mensagem}" th:class="${style}"></p>
 
         <h2>Buscar</h2>
         <br>
-        <form method="get" action="resultadoBusca" th:object="${alunoModel}"
+        <form method="get" action="/resultadoBusca" th:object="${alunoModel}"
               th:style="${stylePersonalizado}" >
             <div class="mb-3">
                 <label class="form-label" for="nome">Nome do Aluno:</label>
@@ -35,15 +35,24 @@
                 </thead>
                 <tbody>
                 <tr th:each="aluno : ${alunoModelList}">
-                    <td th:text="${aluno.nome}"></td>
-                    <td th:text="${aluno.tipo_documento}"></td>
-                    <td th:text="${aluno.data}"></td>
+                    <td th:text="${aluno.nome}">Nome</td>
+
+                    <td>
+                      <span th:each="item, iterStat : ${aluno.itensPerdidos}">
+                        <span th:text="${item.tipoDocumento}"></span><span th:if="${!iterStat.last}">, </span>
+                      </span>
+                    </td>
+
+                    <td>
+                      <span th:each="item, iterStat : ${aluno.itensPerdidos}">
+                        <span th:text="${item.data}"></span><span th:if="${!iterStat.last}">, </span>
+                      </span>
+                    </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
 </div>
 </body>
 </html>

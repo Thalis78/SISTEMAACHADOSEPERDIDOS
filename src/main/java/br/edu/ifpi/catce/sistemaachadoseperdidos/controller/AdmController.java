@@ -1,7 +1,9 @@
 package br.edu.ifpi.catce.sistemaachadoseperdidos.controller;
 
 import br.edu.ifpi.catce.sistemaachadoseperdidos.model.AlunoModel;
+import br.edu.ifpi.catce.sistemaachadoseperdidos.model.ItemPerdidoModel;
 import br.edu.ifpi.catce.sistemaachadoseperdidos.repository.AlunoRepository;
+import br.edu.ifpi.catce.sistemaachadoseperdidos.repository.ItemPerdidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,42 +20,52 @@ public class AdmController {
     @Autowired
     AlunoRepository alunoRepository;
 
+    @Autowired
+    private ItemPerdidoRepository itemPerdidoRepository;
+
+
     @GetMapping("/indexadm")
     public String paginaPrincipal(){
         return "/adm/index";
     }
 
     @GetMapping("/buscaradm")
-    public String buscar(Model model){
-        model.addAttribute(new AlunoModel());
+    public String buscar(Model model) {
+        model.addAttribute("alunoModel", new AlunoModel());
         return "adm/buscar";
     }
+
     @GetMapping("/resultadoBuscaAdm")
-    public String buscaRealizada(@ModelAttribute AlunoModel alunoModel, Model model, RedirectAttributes redirectAttributes){
+    public String buscaRealizada(@ModelAttribute("alunoModel") AlunoModel alunoModel,
+                                 Model model,
+                                 RedirectAttributes redirectAttributes) {
         List<AlunoModel> alunos = alunoRepository.findByPrimeiroNome(alunoModel.getNome());
-        if(alunos.size() > 0){
-            model.addAttribute("stylePersonalizado","display : none;");
-            model.addAttribute("src","static/icons/de-volta.png");
-            model.addAttribute("display","display: table-row");
-            model.addAttribute("nome","Nome");
-            model.addAttribute("documento","Documento");
-            model.addAttribute("data","Data");
-            model.addAttribute("acao","Ação");
-            model.addAttribute(alunos);
-        } else{
-            redirectAttributes.addFlashAttribute("mensagem","Não existe pendências com esse nome");
-            redirectAttributes.addFlashAttribute("style","mensagemErro");
+
+        if (!alunos.isEmpty()) {
+            model.addAttribute("alunoModel", new AlunoModel()); // Para manter o formulário funcionando
+            model.addAttribute("alunoModelList", alunos);
+
+            model.addAttribute("stylePersonalizado", "display: none;");
+            model.addAttribute("src", "static/icons/de-volta.png");
+            model.addAttribute("display", "display: table-row");
+            model.addAttribute("nome", "Nome");
+            model.addAttribute("documento", "Documento");
+            model.addAttribute("data", "Data");
+            model.addAttribute("acao", "Ação");
+
+            return "adm/buscar";
+        } else {
+            redirectAttributes.addFlashAttribute("mensagem", "Não existe pendências com esse nome");
+            redirectAttributes.addFlashAttribute("style", "mensagemErro");
             return "redirect:/buscaradm";
         }
-
-        return "adm/buscar";
-
     }
+
 
     @GetMapping("/cadastraradm")
     public String cadastrar(Model model){
         model.addAttribute(new AlunoModel());
-        return "/adm/cadastrar";
+        return "adm/cadastrarAluno";
     }
     @GetMapping("/confirmar")
     public String confirmar(@RequestParam("id") Long id, Model model){
@@ -68,4 +80,32 @@ public class AdmController {
         redirectAttributes.addFlashAttribute("style","mensagemSucesso");
         return "redirect:/buscaradm";
     }
+
+    @GetMapping("/cadastrarDocumento")
+    public String exibirFormularioCadastroDocumento(Model model) {
+        model.addAttribute("alunos", alunoRepository.findAll());
+        model.addAttribute("itemPerdido", new ItemPerdidoModel());
+        return "adm/cadastrarDocumento";
+    }
+
+    @PostMapping("/cadastrarDocumentoRealizado")
+    public String cadastrarDocumento(@RequestParam("alunoId") Long alunoId,
+                                     @ModelAttribute("itemPerdido") ItemPerdidoModel itemPerdido,
+                                     RedirectAttributes redirectAttributes) {
+
+        AlunoModel aluno = alunoRepository.findById(alunoId).orElse(null);
+        if (aluno == null) {
+            redirectAttributes.addFlashAttribute("mensagem", "Aluno não encontrado.");
+            redirectAttributes.addFlashAttribute("style", "mensagemErro");
+            return "redirect:/documento/cadastrar";
+        }
+
+        itemPerdido.setAluno(aluno);
+        itemPerdidoRepository.save(itemPerdido);
+
+        redirectAttributes.addFlashAttribute("mensagem", "Documento cadastrado com sucesso.");
+        redirectAttributes.addFlashAttribute("style", "mensagemSucesso");
+        return "redirect:/cadastrarDocumento";
+    }
+
 }

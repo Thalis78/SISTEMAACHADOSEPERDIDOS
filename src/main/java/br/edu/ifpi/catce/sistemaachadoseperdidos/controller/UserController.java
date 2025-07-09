@@ -15,7 +15,7 @@ import java.util.List;
 
 
 @Controller
-public class UserCotroller {
+public class UserController {
     @Autowired
     AlunoRepository alunoRepository;
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layoutPadraoAdm.html}"><head>
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layoutPadraoAdm.html}">
+<head>
     <title>BUSCAR</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
@@ -35,11 +36,22 @@
                 </thead>
                 <tbody>
                 <tr th:each="aluno : ${alunoModelList}">
-                    <td th:text="${aluno.nome}"></td>
-                    <td th:text="${aluno.tipo_documento}"></td>
-                    <td th:text="${aluno.data}"></td>
+                    <td th:text="${aluno.nome}">Nome</td>
+
                     <td>
-                        <form method="get" action="/confirmar">
+                      <span th:each="item, iterStat : ${aluno.itensPerdidos}">
+                        <span th:text="${item.tipoDocumento}"></span><span th:if="${!iterStat.last}">, </span>
+                      </span>
+                    </td>
+
+                    <td>
+                      <span th:each="item, iterStat : ${aluno.itensPerdidos}">
+                        <span th:text="${item.data}"></span><span th:if="${!iterStat.last}">, </span>
+                      </span>
+                    </td>
+
+                    <td>
+                        <form method="get" th:action="@{/confirmar}">
                             <input type="hidden" name="id" th:value="${aluno.id}"/>
                             <button type="submit" class="btn btn-danger" style="font-size: 0.8em">EXCLUIR</button>
                         </form>

@@ -1,6 +1,6 @@
 package br.edu.ifpi.catce.sistemaachadoseperdidos.config;
 
-import br.edu.ifpi.catce.sistemaachadoseperdidos.controller.UserCotroller;
+import br.edu.ifpi.catce.sistemaachadoseperdidos.controller.UserController;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -18,7 +18,7 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 @Configuration
-@ComponentScan(basePackageClasses = UserCotroller.class)
+@ComponentScan(basePackageClasses = UserController.class)
 @EnableWebMvc
 @EnableSpringDataWebSupport
 public class WebConfig implements WebMvcConfigurer {
