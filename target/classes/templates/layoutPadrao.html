@@ -12,13 +12,13 @@
 <body>
 <div class="background"></div>
 
-<header th:replace="~{/fragments/header.html}" th:fragment="header">
-</header>
+<header th:replace="fragments/header :: header"></header>
+
 
 <div class="container-custom" layout:fragment="container">
 </div>
 
-<footer id="footer" th:replace="~{/fragments/footer.html}" th:fragment="footer"></footer>
+<footer id="footer" th:replace="fragments/footer :: footer"></footer>
 
 </body>
 </html>
