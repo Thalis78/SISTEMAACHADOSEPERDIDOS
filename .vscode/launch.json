@@ -1,0 +1,14 @@
+{
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Spring Boot-SistemachadoseperdidosApplication<sistemachadoseperdidos>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "br.edu.ifpi.catce.sistemaachadoseperdidos.SistemachadoseperdidosApplication",
+      "projectName": "sistemachadoseperdidos",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}

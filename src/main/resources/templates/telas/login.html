@@ -1,37 +1,120 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-            xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layoutPadrao.html}">
-<head>
-    <title>LOGIN</title>
-    <link rel="stylesheet" href="/static/style.css">
-    <script src="/static/script.js" defer></script>
-</head>
-<body>
-<div layout:fragment="container">
-    <div class="contextGenerico">
-        <form method="post" th:action="@{/login}">
-            <p th:text="${mensagem}" th:class="${style}"></p>
-            <h2>Login</h2>
-            <h3>Acesse ao Sistema:</h3>
-            <br>
-            <div class="mb-3">
-                <label class="form-label" for="username">Usúario:</label>
-                <input class="form-control" type="text"  id="username" name="username" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="password">Senha:</label>
-                <div class="password-container">
-                    <input id="password" class="form-control" name="password"  type="password" required>
-                    <button type="button" class="password-toggle" aria-label="Show/Hide password">
-                        <img src="static/icons/eye-off.svg" alt="Toggle visibility" class="eye-icon">
-                    </button>
-                </div>
-            </div>
+<html lang="pt-BR" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Sistema de Achados e Perdidos - IFPI</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen flex flex-col justify-center items-center relative">
+    <p
+      id="toast-message"
+      th:text="${mensagem}"
+      th:class="${style} + ' fixed top-8 left-[70%] z-50 px-4 py-2 rounded-md shadow-md transition-all duration-500 transform scale-100 opacity-100 min-w-[250px] text-center text-sm font-semibold'"
+      th:classappend="${mensagem} ? ' show-toast' : ''"
+      class="hidden"
+    ></p>
+    <div
+      class="w-full max-w-sm bg-[#10352c] rounded-2xl shadow-xl p-8 border border-emerald-800/50"
+    >
+      <a
+        href="/index"
+        class="text-gray-400 hover:text-emerald-400 text-sm flex items-center gap-1 transition-colors mb-6"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        Voltar para Página Principal
+      </a>
 
-            <br>
-            <input type="submit" class="btn btn-sucess" value="Acessar">
-        </form>
+      <br />
+
+      <div class="flex justify-center mb-6">
+        <svg
+          class="w-14 h-14 text-emerald-400 p-2 rounded-full border-2 border-emerald-700/50 bg-[#081a17]"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v3"
+          ></path>
+        </svg>
+      </div>
+
+      <form method="post" th:action="@{/login}" class="space-y-6">
+        <h2 class="text-3xl font-extrabold text-center text-emerald-300">
+          Área Administrativa
+        </h2>
+        <h3 class="text-md text-gray-400 text-center mb-6">
+          Acesse ao Sistema de Achados e Perdidos
+        </h3>
+
+        <div>
+          <label class="block text-white text-sm mb-1" for="username"
+            >Usuário:</label
+          >
+          <input
+            class="w-full px-4 py-3 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none login-input bg-white border-emerald-500"
+            type="text"
+            id="username"
+            name="username"
+            required
+            placeholder="Digite seu usuário"
+          />
+        </div>
+
+        <div>
+          <label class="block text-white text-sm mb-1" for="password"
+            >Senha:</label
+          >
+          <div class="password-container">
+            <input
+              id="password"
+              class="w-full px-4 py-3 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none login-input bg-white border-emerald-500"
+              name="password"
+              type="password"
+              required
+              placeholder="Digite sua senha"
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              aria-label="Mostrar/Ocultar senha"
+            >
+              <img
+                src="static/icons/eye-off.svg"
+                alt="Toggle visibility"
+                class="w-5 h-5 eye-icon"
+              />
+            </button>
+          </div>
+        </div>
+
+        <input
+          type="submit"
+          class="btn-acessar w-full py-3 text-white font-bold rounded-xl shadow-lg cursor-pointer"
+          value="Acessar"
+        />
+      </form>
     </div>
-</div>
-</body>
+
+    <script src="/static/script.js"></script>
+  </body>
 </html>

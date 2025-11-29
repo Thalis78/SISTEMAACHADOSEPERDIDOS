@@ -20,15 +20,9 @@ public class UserController {
     AlunoRepository alunoRepository;
 
     @GetMapping("/index")
-    public String paginaPrincipal(){
-        return "/telas/index";
-    }
-
-
-    @GetMapping("/buscar")
     public String buscar(Model model){
         model.addAttribute(new AlunoModel());
-        return "telas/buscar";
+        return "telas/index";
     }
     @GetMapping("/resultadoBusca")
     public String buscaRealizada(@ModelAttribute AlunoModel alunoModel, Model model, RedirectAttributes redirectAttributes){
@@ -44,10 +38,10 @@ public class UserController {
         } else{
             redirectAttributes.addFlashAttribute("mensagem","Não existe pendências com esse nome");
             redirectAttributes.addFlashAttribute("style","mensagemErro");
-            return "redirect:/buscar";
+            return "redirect:/index";
         }
 
-        return "telas/buscar";
+        return "telas/index";
 
     }
 
@@ -57,7 +51,7 @@ public class UserController {
     public String login(@RequestParam(value = "error", required = false) String error, RedirectAttributes redirectAttributes) {
         if (error != null) {
             redirectAttributes.addFlashAttribute("mensagem", "Erro! Entre com um usuário e senha corretos.");
-            redirectAttributes.addFlashAttribute("style", "mensagemErro");
+            redirectAttributes.addFlashAttribute("style", "bg-red-800 text-red-100 border border-red-600");
             return "redirect:/login";
         }
         return "telas/login";

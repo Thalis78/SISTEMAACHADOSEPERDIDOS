@@ -1,66 +1,158 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layoutPadraoAdm.html}">
-<head>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layoutPadraoAdm.html}"
+>
+  <head>
     <title>BUSCAR</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-<div layout:fragment="container">
-    <div class="contextGenerico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #0b221c;
+        color: #e5e7eb;
+      }
 
-        <a href="buscaradm"><img th:src="${src}" width="20px"></a>
+      .search-container {
+        max-width: 600px;
+        width: 90%;
+        margin: 0 auto;
+      }
 
-        <p th:text="${mensagem}" th:class="${style}"></p>
+      .ifpi-content-bg {
+        background-image: url("static/icons/ilustracao-ifpi.svg");
+        background-size: 330px;
+        background-position: top left;
+        background-repeat: no-repeat;
+        background-blend-mode: multiply;
+        padding: 2.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div layout:fragment="container">
+      <div class="contextGenerico max-w-4xl mx-auto px-4 pt-16">
+        <h2 class="text-3xl md:text-4xl font-bold text-white text-center mb-8">
+          Buscar seu Documento Perdido
+        </h2>
 
-        <h2>Buscar</h2>
-        <br>
-        <form method="get" action="/resultadoBuscaAdm" th:object="${alunoModel}"
-              th:style="${stylePersonalizado}" >
-            <div class="mb-3">
-                <label class="form-label" for="nome">Nome do Aluno:</label>
-                <input class="form-control" id="nome" required type="text" th:field="*{nome}">
+        <div class="search-container mb-12">
+          <form
+            method="get"
+            action="/resultadoBuscaAdm"
+            th:object="${alunoModel}"
+            class="w-full"
+          >
+            <div class="relative">
+              <svg
+                class="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 text-emerald-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                ></path>
+              </svg>
+              <input
+                class="w-full bg-[#10352c] border border-emerald-500 text-white placeholder-gray-500 py-4 pl-12 pr-4 rounded-xl shadow-lg focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 transition"
+                id="nome"
+                required
+                type="text"
+                th:field="*{nome}"
+                placeholder="Digite o nome do aluno para realizar a busca"
+              />
             </div>
-            <br>
-            <input type="submit" class="btn btn-sucess" value="Buscar">
-        </form>
-        <div>
-            <table class="table table-bordered" style="text-align: center">
-                <thead>
-                <tr id="display" th:style="${display}" >
-                    <td scope="col" th:text="${nome}"></td>
-                    <td scope="col" th:text="${documento}"></td>
-                    <td scope="col" th:text="${data}"></td>
-                    <td scope="col" th:text="${acao}"></td>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="aluno : ${alunoModelList}">
-                    <td th:text="${aluno.nome}">Nome</td>
-
-                    <td>
-                      <span th:each="item, iterStat : ${aluno.itensPerdidos}">
-                        <span th:text="${item.tipoDocumento}"></span><span th:if="${!iterStat.last}">, </span>
-                      </span>
-                    </td>
-
-                    <td>
-                      <span th:each="item, iterStat : ${aluno.itensPerdidos}">
-                        <span th:text="${item.data}"></span><span th:if="${!iterStat.last}">, </span>
-                      </span>
-                    </td>
-
-                    <td>
-                        <form method="get" th:action="@{/confirmar}">
-                            <input type="hidden" name="id" th:value="${aluno.id}"/>
-                            <button type="submit" class="btn btn-danger" style="font-size: 0.8em">EXCLUIR</button>
-                        </form>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <p
+              class="text-center text-sm text-gray-500 mt-4"
+              th:text="${mensagem} ?: 'Caso não encontrado, consulte a guarda. Pode não estar cadastrado ou ainda não ter sido encontrado.'"
+            ></p>
+            <input type="submit" class="hidden" value="Buscar" />
+          </form>
         </div>
+
+        <div class="mt-8" th:if="${alunoModelList != null}">
+          <h3 class="text-2xl font-semibold text-emerald-300 mb-4 text-center">
+            Resultados
+          </h3>
+          <div
+            class="overflow-x-auto rounded-xl shadow-2xl border border-emerald-700"
+          >
+            <table class="min-w-full text-left text-sm font-light">
+              <thead
+                class="border-b border-emerald-700 bg-emerald-900/50 font-medium text-white/80"
+              >
+                <tr>
+                  <th scope="col" class="px-6 py-3">Nome do Aluno</th>
+                  <th scope="col" class="px-6 py-3">Documento(s) Perdido(s)</th>
+                  <th scope="col" class="px-6 py-3">Data de Encontro</th>
+                  <th scope="col" class="px-6 py-3">Ação</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  th:each="aluno : ${alunoModelList}"
+                  class="border-b border-emerald-800 bg-[#10352c] hover:bg-[#10352c]/80 transition duration-150"
+                >
+                  <td
+                    class="whitespace-nowrap px-6 py-4 font-medium"
+                    th:text="${aluno.nome}"
+                  ></td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    <span th:each="item, iterStat : ${aluno.itensPerdidos}">
+                      <span th:text="${item.tipoDocumento}"></span
+                      ><span th:if="${!iterStat.last}">, </span>
+                    </span>
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    <span th:each="item, iterStat : ${aluno.itensPerdidos}">
+                      <span th:text="${item.data}"></span
+                      ><span th:if="${!iterStat.last}">, </span>
+                    </span>
+                  </td>
+                  <td class="whitespace-nowrap px-6 py-4">
+                    <form method="get" th:action="@{/confirmar}">
+                      <input type="hidden" name="id" th:value="${aluno.id}" />
+                      <button
+                        type="submit"
+                        class="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-all"
+                      >
+                        EXCLUIR
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
-</div>
-</body>
+
+    <script>
+      document
+        .getElementById("scroll-to-search")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          document
+            .getElementById("buscar-section")
+            .scrollIntoView({ behavior: "smooth" });
+        });
+
+      window.addEventListener("load", function () {
+        const resultadoSection = document.getElementById("buscar-section");
+        if (resultadoSection && window.location.hash === "#buscar-section") {
+          resultadoSection.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    </script>
+  </body>
 </html>

@@ -1,28 +1,46 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layoutPadraoAdm.html}">
-<head>
-  <title>ADM</title>
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorate="~{layoutPadraoAdm.html}"
+>
+  <head>
+    <title>ADM</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <div layout:fragment="container">
+      <div class="max-w-md mx-auto px-4 py-8 bg-white rounded-lg shadow-lg">
+        <div class="text-center mb-6">
+          <img
+            src="https://img.icons8.com/?size=100&id=tX0N1qt8dybp&format=png&color=000000"
+            class="w-16 h-16 mx-auto mb-4"
+            alt="Icone"
+          />
+          <h3 class="text-2xl font-semibold text-gray-800">
+            Aperte o botão abaixo para confirmar a exclusão.
+          </h3>
+        </div>
 
-<div layout:fragment="container">
-  <div class="contextGenerico">
-    <div class="styleConfir">
-      <img th:src="${src}" width="50px"></a>
-      <h3>
-        Aperte do botão confirmar para excluir.
-      </h3>
-      <div class="styleButtons">
-        <button style="background: transparent;" ><a style="color: red;" href="buscaradm">Cancelar</a></button>
-        <form action="deletar" method="post">
-          <input type="hidden" name="id" th:value="${id}"/>
-          <button type="submit" class="btn btn-danger">Confirmar</button>
-        </form>
+        <div class="flex justify-between items-center space-x-4">
+          <a
+            href="buscaradm"
+            class="text-red-600 hover:text-red-800 font-medium py-2 px-6 border border-red-600 rounded-lg text-center transition duration-200 hover:bg-red-100"
+          >
+            Cancelar
+          </a>
+
+          <form action="deletar" method="post">
+            <input type="hidden" name="id" th:value="${id}" />
+            <button
+              type="submit"
+              class="bg-red-600 text-white py-2 px-6 rounded-lg hover:bg-red-700 transition duration-200"
+            >
+              Confirmar
+            </button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-</body>
+  </body>
 </html>

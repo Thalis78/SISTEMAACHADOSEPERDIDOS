@@ -24,7 +24,7 @@ public class SecurityConfig {
         http
                 .authorizeRequests(authorizeRequests ->
                         authorizeRequests
-                                .requestMatchers("index","buscar","resultadoBusca","login").permitAll()
+                                .requestMatchers("index","resultadoBusca","login").permitAll()
                                 .requestMatchers("/static/**").permitAll()
                                 .anyRequest().authenticated()
                 )
