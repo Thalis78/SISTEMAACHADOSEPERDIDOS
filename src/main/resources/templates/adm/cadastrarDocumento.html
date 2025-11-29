@@ -20,25 +20,30 @@
         class="hidden"
       ></p>
 
-      <div class="max-w-sm mx-auto p-6 bg-white rounded-xl shadow-md">
+      <div
+        class="max-w-sm mx-auto p-8 bg-white rounded-2xl shadow-xl border border-emerald-200"
+      >
         <form
           method="post"
           th:action="@{/cadastrarDocumentoRealizado}"
           th:object="${itemPerdido}"
+          class="space-y-6"
         >
-          <h2 class="text-xl font-semibold text-gray-800 text-center mb-5">
+          <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">
             Cadastrar Documento
           </h2>
 
-          <div class="mb-3">
-            <label class="block text-sm font-medium text-gray-600 mb-1">
+          <div class="relative">
+            <label
+              class="absolute -top-3 left-3 bg-white px-1 text-sm text-gray-500"
+            >
               Selecione o Aluno
             </label>
             <select
               id="alunoSelect"
               name="alunoId"
               required
-              class="w-full p-2 border border-gray-300 rounded-md text-sm text-black focus:ring-emerald-400 focus:border-emerald-500 transition outline-none"
+              class="w-full p-4 border border-gray-300 rounded-xl text-sm text-black focus:ring-emerald-400 focus:border-emerald-500 transition outline-none shadow-sm"
             >
               <option
                 th:each="aluno : ${alunos}"
@@ -48,14 +53,16 @@
             </select>
           </div>
 
-          <div class="mb-3">
-            <label class="block text-sm font-medium text-gray-600 mb-1">
+          <div class="relative">
+            <label
+              class="absolute -top-3 left-3 bg-white px-1 text-sm text-gray-500"
+            >
               Tipo de Documento
             </label>
             <select
               th:field="*{tipoDocumento}"
               required
-              class="w-full p-2 border border-gray-300 rounded-md text-sm text-black focus:ring-emerald-400 focus:border-emerald-500 transition outline-none"
+              class="w-full p-4 border border-gray-300 rounded-xl text-sm text-black focus:ring-emerald-400 focus:border-emerald-500 transition outline-none shadow-sm"
             >
               <option th:value="CPF">CPF</option>
               <option th:value="RG">RG</option>
@@ -64,22 +71,24 @@
             </select>
           </div>
 
-          <div class="mb-3">
-            <label class="block text-sm font-medium text-gray-600 mb-1">
+          <div class="relative">
+            <label
+              class="absolute -top-3 left-3 bg-white px-1 text-sm text-gray-500"
+            >
               Data
             </label>
             <input
               type="date"
               th:field="*{data}"
               required
-              class="w-full p-2 border border-gray-300 rounded-md text-sm text-black focus:ring-emerald-400 focus:border-emerald-500 transition outline-none"
+              class="w-full p-4 border border-gray-300 rounded-xl text-sm text-black focus:ring-emerald-400 focus:border-emerald-500 transition outline-none shadow-sm"
             />
           </div>
 
-          <div class="mt-4">
+          <div>
             <button
               type="submit"
-              class="w-full bg-emerald-600 text-white py-2.5 rounded-md font-medium text-sm hover:bg-emerald-700 transition transform hover:scale-105"
+              class="w-full py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 shadow-lg transition transform hover:scale-105"
             >
               Cadastrar Documento
             </button>
