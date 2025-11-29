@@ -1,37 +1,229 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-            xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layoutPadrao.html}">
-<head>
-    <title>LOGIN</title>
-    <link rel="stylesheet" href="/static/style.css">
-    <script src="/static/script.js" defer></script>
-</head>
-<body>
-<div layout:fragment="container">
-    <div class="contextGenerico">
-        <form method="post" th:action="@{/login}">
-            <p th:text="${mensagem}" th:class="${style}"></p>
-            <h2>Login</h2>
-            <h3>Acesse ao Sistema:</h3>
-            <br>
-            <div class="mb-3">
-                <label class="form-label" for="username">Usúario:</label>
-                <input class="form-control" type="text"  id="username" name="username" required>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="password">Senha:</label>
-                <div class="password-container">
-                    <input id="password" class="form-control" name="password"  type="password" required>
-                    <button type="button" class="password-toggle" aria-label="Show/Hide password">
-                        <img src="static/icons/eye-off.svg" alt="Toggle visibility" class="eye-icon">
-                    </button>
-                </div>
-            </div>
+<html lang="pt-BR" xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | Sistema de Achados e Perdidos - IFPI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #081a17;
+        color: #e5e7eb;
+      }
 
-            <br>
-            <input type="submit" class="btn btn-sucess" value="Acessar">
-        </form>
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+          45deg,
+          #0f2923 0px,
+          #0f2923 10px,
+          #081a17 10px,
+          #081a17 20px
+        );
+        opacity: 0.15;
+        z-index: -1;
+      }
+
+      .login-input {
+        background-color: #081a17;
+        border: 1px solid #10b981;
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+        transition: all 0.3s ease;
+      }
+      .login-input:focus {
+        border-color: #34d399;
+        box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.4);
+      }
+
+      .password-container {
+        position: relative;
+      }
+      .password-toggle {
+        position: absolute;
+        right: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+        line-height: 1;
+        padding: 0;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #6b7280;
+        transition: color 0.2s;
+        z-index: 10;
+      }
+      .password-toggle:hover {
+        color: #34d399;
+      }
+
+      .btn-acessar {
+        background-color: #059669;
+        box-shadow: 0 4px 15px -5px rgba(5, 150, 105, 0.6);
+        transition: all 0.3s ease;
+      }
+      .btn-acessar:hover {
+        background-color: #047857;
+        box-shadow: 0 6px 20px -5px rgba(5, 150, 105, 0.8),
+          0 0 10px rgba(5, 150, 105, 0.5);
+        transform: translateY(-1px);
+      }
+
+      .btn-home {
+        background-color: #10b981;
+        box-shadow: 0 4px 15px -5px rgba(16, 185, 129, 0.6);
+        transition: all 0.3s ease;
+      }
+      .btn-home:hover {
+        background-color: #34d399;
+        box-shadow: 0 6px 20px -5px rgba(16, 185, 129, 0.8),
+          0 0 10px rgba(16, 185, 129, 0.5);
+        transform: translateY(-1px);
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col justify-center items-center relative">
+    <p
+      id="toast-message"
+      th:text="${mensagem}"
+      th:class="${style} + ' fixed top-0 left-1/2 -translate-x-1/2 mt-8 z-50 px-6 py-3 rounded-xl shadow-lg transition-all duration-300 transform scale-100 opacity-100 min-w-[300px] text-center text-sm font-semibold'"
+      th:classappend="${mensagem} ? ' !block' : ' !hidden'"
+      class="hidden"
+      style="/* Necessário para o Thymeleaf aplicar as classes */"
+    ></p>
+
+    <div
+      class="w-full max-w-sm bg-[#10352c] rounded-2xl shadow-xl p-8 border border-emerald-800/50"
+    >
+      <a
+        href="/index"
+        class="text-gray-400 hover:text-emerald-400 text-sm flex items-center gap-1 transition-colors mb-6"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M15 19l-7-7 7-7"
+          />
+        </svg>
+        Voltar para Página Principal
+      </a>
+
+      <br />
+
+      <div class="flex justify-center mb-6">
+        <svg
+          class="w-14 h-14 text-emerald-400 p-2 rounded-full border-2 border-emerald-700/50 bg-[#081a17]"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v3"
+          ></path>
+        </svg>
+      </div>
+
+      <form method="post" th:action="@{/login}" class="space-y-6">
+        <h2 class="text-3xl font-extrabold text-center text-emerald-300">
+          Área Administrativa
+        </h2>
+        <h3 class="text-md text-gray-400 text-center mb-6">
+          Acesse ao Sistema de Achados e Perdidos
+        </h3>
+
+        <div>
+          <label class="block text-white text-sm mb-1" for="username"
+            >Usuário:</label
+          >
+          <input
+            class="w-full px-4 py-3 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none login-input bg-white border-emerald-500"
+            type="text"
+            id="username"
+            name="username"
+            required
+            placeholder="Digite seu usuário"
+          />
+        </div>
+
+        <div>
+          <label class="block text-white text-sm mb-1" for="password"
+            >Senha:</label
+          >
+          <div class="password-container">
+            <input
+              id="password"
+              class="w-full px-4 py-3 rounded-xl text-gray-900 placeholder-gray-400 focus:outline-none login-input bg-white border-emerald-500"
+              name="password"
+              type="password"
+              required
+              placeholder="Digite sua senha"
+            />
+            <button
+              type="button"
+              class="password-toggle"
+              aria-label="Mostrar/Ocultar senha"
+            >
+              <img
+                src="static/icons/eye-off.svg"
+                alt="Toggle visibility"
+                class="w-5 h-5 eye-icon"
+              />
+            </button>
+          </div>
+        </div>
+
+        <input
+          type="submit"
+          class="btn-acessar w-full py-3 text-white font-bold rounded-xl shadow-lg cursor-pointer"
+          value="Acessar"
+        />
+      </form>
     </div>
-</div>
-</body>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const passwordField = document.getElementById("password");
+        const toggleButton = document.querySelector(".password-toggle");
+        const eyeIcon = toggleButton.querySelector(".eye-icon");
+
+        toggleButton.addEventListener("click", function () {
+          const isPassword = passwordField.type === "password";
+          passwordField.type = isPassword ? "text" : "password";
+
+          eyeIcon.src = isPassword
+            ? "static/icons/eye.svg"
+            : "static/icons/eye-off.svg";
+        });
+
+        const toastMessage = document.getElementById("toast-message");
+        if (toastMessage && toastMessage.classList.contains("!block")) {
+          setTimeout(() => {
+            toastMessage.classList.add("!hidden");
+            toastMessage.classList.remove("!block");
+          }, 4000);
+        }
+      });
+    </script>
+  </body>
 </html>

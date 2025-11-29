@@ -1,27 +1,134 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns:th="http://www.thymeleaf.org">
-<body>
-<header th:fragment="headerAdm">
-  <a href="/indexadm"><img src="https://suap.ifpi.edu.br/media/configuracao/logo-ifpi-transp.png" alt="IFPI Logo"></a>
-  <nav>
-    <ul class="nav nav-underline">
-      <li class="nav-item">
-        <a class="nav-link" href="/buscaradm">Buscar</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/cadastraradm">Cadastrar Aluno</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/cadastrarDocumento">Cadastrar Documento</a>
-      </li>
-      <form th:action="@{/logout}" method="post" style="display:inline;">
-        <button id="logout" type="submit" title="Logout" style="background: none;border: none;">
-          <img src="/static/icons/sair-do-usuario.png" width="25px" alt="Logout Icon">
-        </button>
-      </form>
-    </ul>
-  </nav>
-</header>
-</body>
+  <body>
+    <header
+      th:fragment="headerAdm"
+      class="relative z-10 flex justify-between items-center px-4 md:px-16 py-4"
+    >
+      <div class="flex items-center space-x-2">
+        <a href="/indexadm">
+          <img
+            src="static/icons/ifpi.svg"
+            alt="Logo IFPI"
+            class="w-16 h-16 md:w-20 md:h-20 rounded-lg p-1"
+          />
+        </a>
+      </div>
 
+      <nav class="hidden md:flex">
+        <ul class="flex space-x-6 text-white font-medium">
+          <li class="nav-item">
+            <a
+              href="/buscaradm"
+              class="hover:text-emerald-200 transition-colors"
+              >Buscar</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="/cadastraradm"
+              class="hover:text-emerald-200 transition-colors"
+              >Cadastrar Aluno</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              href="/cadastrarDocumento"
+              class="hover:text-emerald-200 transition-colors"
+              >Cadastrar Documento</a
+            >
+          </li>
+        </ul>
+      </nav>
+
+      <div class="md:hidden flex items-center">
+        <button id="menu-toggle" class="text-white p-2">
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            ></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <form th:action="@{/logout}" method="post" style="display: inline">
+          <button
+            id="logout"
+            type="submit"
+            title="Logout"
+            class="bg-transparent border-none p-0"
+          >
+            <img
+              src="https://img.icons8.com/?size=100&id=82792&format=png&color=ffffff"
+              width="25px"
+              alt="Logout Icon"
+            />
+          </button>
+        </form>
+      </div>
+    </header>
+
+    <div
+      id="mobile-menu"
+      class="md:hidden hidden fixed inset-0 bg-black bg-opacity-50 z-20"
+    >
+      <div class="flex justify-end p-4">
+        <button id="menu-close" class="text-white">
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <nav
+        class="flex flex-col items-center space-y-6 mt-12 text-white font-medium"
+      >
+        <a href="/buscaradm" class="hover:text-emerald-200 transition-colors"
+          >Buscar</a
+        >
+        <a href="/cadastraradm" class="hover:text-emerald-200 transition-colors"
+          >Cadastrar Aluno</a
+        >
+        <a
+          href="/cadastrarDocumento"
+          class="hover:text-emerald-200 transition-colors"
+          >Cadastrar Documento</a
+        >
+      </nav>
+    </div>
+
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const menuClose = document.getElementById("menu-close");
+      const mobileMenu = document.getElementById("mobile-menu");
+
+      menuToggle.addEventListener("click", () => {
+        mobileMenu.classList.remove("hidden");
+      });
+
+      menuClose.addEventListener("click", () => {
+        mobileMenu.classList.add("hidden");
+      });
+    </script>
+  </body>
 </html>

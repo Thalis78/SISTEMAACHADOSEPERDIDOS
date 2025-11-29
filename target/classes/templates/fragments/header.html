@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="pt" xmlns:th="http://www.thymeleaf.org">
-<body>
-<header th:fragment="header">
-  <a href="/index"><img src="https://suap.ifpi.edu.br/media/configuracao/logo-ifpi-transp.png" alt="IFPI Logo"></a>
-  <nav>
-    <ul class="nav nav-underline">
-      <li class="nav-item">
-        <a class="nav-link" href="/buscar">Buscar</a>
-      </li>
-      <li class="nav-item" >
-        <a class="nav-link" href="/login">Login</a>
-      </li>
-    </ul>
-  </nav>
-</header>
-</body>
-
+  <body>
+    <header
+      th:fragment="header"
+      class="relative z-10 flex justify-between items-center px-4 md:px-16"
+    >
+      <div class="flex items-center space-x-2 text-white/90">
+        <img
+          src="static/icons/ifpi.svg"
+          alt="Logo IFPI"
+          class="w-20 h-20 rounded-lg p-1"
+        />
+      </div>
+      <div class="text-sm">
+        <span class="mr-2 hidden sm:inline">você é administrador?</span>
+        <a
+          href="#"
+          class="bg-emerald-600 hover:bg-emerald-700 text-white font-medium py-2 px-4 rounded-lg transition duration-200"
+          >Faça Login</a
+        >
+      </div>
+    </header>
+  </body>
 </html>
